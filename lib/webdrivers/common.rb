@@ -88,6 +88,9 @@ module Webdrivers
       #
       # @return [String] Path to the driver binary.
       def update
+        # Don't ever update.
+        return nil
+
         if correct_binary?
           msg = required_version != EMPTY_VERSION ?  'The required webdriver version' : 'A working webdriver version'
           Webdrivers.logger.debug "#{msg} is already on the system"
