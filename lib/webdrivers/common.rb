@@ -113,7 +113,8 @@ module Webdrivers
       #
       # @return [String]
       def driver_path
-        File.absolute_path File.join(System.install_dir, file_name)
+        return "/usr/bin/chromedriver"
+        # File.absolute_path File.join(System.install_dir, file_name)
       end
 
       private
