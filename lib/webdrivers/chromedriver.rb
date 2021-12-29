@@ -97,18 +97,8 @@ module Webdrivers
         false
       end
 
-      def download_url
-        return @download_url if @download_url
-
-        driver_version = if required_version == EMPTY_VERSION
-                           latest_version
-                         else
-                           normalize_version(required_version)
-                         end
-        filename = driver_filename(driver_version)
-        url = "#{base_url}/#{driver_version}/chromedriver_#{filename}.zip"
-        Webdrivers.logger.debug "chromedriver URL: #{url}"
-        @download_url = url
+      def direct_url(driver_version)
+        "#{base_url}/#{driver_version}/chromedriver_#{driver_filename(driver_version)}.zip"
       end
 
       def driver_filename(driver_version)
@@ -156,17 +146,4 @@ module Webdrivers
   end
 end
 
-if ::Selenium::WebDriver::Service.respond_to? :driver_path=
-  ::Selenium::WebDriver::Chrome::Service.driver_path = proc { ::Webdrivers::Chromedriver.update }
-else
-  # v3.141.0 and lower
-  module Selenium
-    module WebDriver
-      module Chrome
-        def self.driver_path
-          @driver_path ||= Webdrivers::Chromedriver.update
-        end
-      end
-    end
-  end
-end
+::Selenium::WebDriver::Chrome::Service.driver_path = proc { ::Webdrivers::Chromedriver.update }

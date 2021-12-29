@@ -42,14 +42,6 @@ module Webdrivers
         System.platform == 'win' ? 'geckodriver.exe' : 'geckodriver'
       end
 
-      def download_url
-        @download_url ||= if required_version == EMPTY_VERSION
-                            direct_url(latest_version)
-                          else
-                            direct_url(required_version)
-                          end
-      end
-
       def direct_url(version)
         "#{base_url}/download/v#{version}/geckodriver-v#{version}-#{platform_ext}"
       end
@@ -68,17 +60,4 @@ module Webdrivers
   end
 end
 
-if ::Selenium::WebDriver::Service.respond_to? :driver_path=
-  ::Selenium::WebDriver::Firefox::Service.driver_path = proc { ::Webdrivers::Geckodriver.update }
-else
-  # v3.141.0 and lower
-  module Selenium
-    module WebDriver
-      module Firefox
-        def self.driver_path
-          @driver_path ||= Webdrivers::Geckodriver.update
-        end
-      end
-    end
-  end
-end
+::Selenium::WebDriver::Firefox::Service.driver_path = proc { ::Webdrivers::Geckodriver.update }

@@ -76,15 +76,15 @@ module Webdrivers
         false
       end
 
-      # def linux_compatible?(driver_version)
-      #   System.platform == 'linux' && driver_version >= normalize_version('89.0.731.0')
-      # end
+      def linux_compatible?(driver_version)
+        System.platform == 'linux' && driver_version >= normalize_version('89.0.731.0')
+      end
 
       def driver_filename(driver_version)
         if System.platform == 'win' || System.wsl_v1?
           "win#{System.bitsize}" # 32 or 64-bit
-        # elsif linux_compatible?(driver_version)
-        #   'linux64'
+        elsif linux_compatible?(driver_version)
+          'linux64'
         elsif System.platform == 'mac'
           # Determine M1 or Intel architecture
           apple_arch = apple_m1_compatible?(driver_version) ? 'arm' : 'mac'
@@ -94,18 +94,8 @@ module Webdrivers
         end
       end
 
-      def download_url
-        return @download_url if @download_url
-
-        driver_version = if required_version == EMPTY_VERSION
-                           latest_version
-                         else
-                           normalize_version(required_version)
-                         end
-        filename = driver_filename(driver_version)
-        url = "#{base_url}/#{driver_version}/edgedriver_#{filename}.zip"
-        Webdrivers.logger.debug "msedgedriver URL: #{url}"
-        @download_url = url
+      def direct_url(driver_version)
+        "#{base_url}/#{driver_version}/edgedriver_#{driver_filename(driver_version)}.zip"
       end
     end
   end

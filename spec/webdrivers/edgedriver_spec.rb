@@ -5,13 +5,10 @@ require 'spec_helper'
 describe Webdrivers::Edgedriver do
   let(:edgedriver) { described_class }
 
-  before(:all) do # rubocop:disable RSpec/BeforeAfterAll
-    if Selenium::WebDriver::VERSION[0].to_i < 4
-      skip "The current selenium-webdriver doesn't include Chromium based Edge support"
-    end
+  before do
+    skip 'Edge is not yet supported on Linux' if Webdrivers::System.platform == 'linux'
+    edgedriver.remove
   end
-
-  before { edgedriver.remove }
 
   describe '#update' do
     context 'when evaluating #correct_binary?' do
@@ -178,8 +175,7 @@ describe Webdrivers::Edgedriver do
     end
 
     it 'raises VersionError for unknown version' do
-      skip "MS doesn't yet support point release latest versioning."
-      allow(edgedriver).to receive(:browser_version).and_return('77.0.9999.0000')
+      allow(edgedriver).to receive(:browser_version).and_return Gem::Version.new('77.0.9999')
       msg = 'Unable to find latest point release version for 77.0.9999. '\
 'Please set `Webdrivers::Edgedriver.required_version = <desired driver version>` '\
 'to a known edgedriver version: Can not reach https://msedgedriver.azureedge.net/'

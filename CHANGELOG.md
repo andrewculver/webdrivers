@@ -1,3 +1,17 @@
+# 5.0.0 (2021-10-19)
+* Require Selenium 4+
+* Remove custom Logger and use the one in Selenium 4
+
+# 4.7.0 (2021-10-14)
+* Add support for Selenium 4.x #218 (thanks yahonda )
+* Allow Edge on Linux
+* Update required Selenium > 3.141 because of a change in 4.6
+* Require Ruby 2.6+
+* Fix IE downloads with the change in location of assets
+
+# 4.6.1 (2021-08-19)
+* Fix bug in IEdriver caused by bad formatting in recent release
+
 # 4.6.0 (2021-02-26)
 * Update `Edgedriver` naming to support Selenium 4 beta (([#206](https://github.com/titusfortner/webdrivers/pull/206))
 

@@ -7,7 +7,7 @@ require 'webdrivers/version'
 Gem::Specification.new do |s|
   s.name        = 'webdrivers'
   s.version     = Webdrivers::VERSION
-  s.required_ruby_version = '>= 2.4.0'
+  s.required_ruby_version = '>= 2.6.0'
   s.authors     = ['Titus Fortner', 'Lakshya Kapoor', 'Thomas Walpole']
   s.email       = %w[titusfortner@gmail.com kapoorlakshya@gmail.com]
   s.homepage    = 'https://github.com/titusfortner/webdrivers'
@@ -38,5 +38,5 @@ Gem::Specification.new do |s|
 
   s.add_runtime_dependency 'nokogiri', '~> 1.6'
   s.add_runtime_dependency 'rubyzip', '>= 1.3.0'
-  s.add_runtime_dependency 'selenium-webdriver', '>= 3.0', '< 4.0'
+  s.add_runtime_dependency 'selenium-webdriver', '~> 4.0'
 end
